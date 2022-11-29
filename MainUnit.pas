@@ -49,12 +49,6 @@ begin
   SetPixelFormat(hdc, nPixelFormat, @pfd);
 end;
 
-
-procedure DrawProcess;
-begin
-beep;
-end;
-
 procedure TMainForm.Button1Click(Sender: TObject);
 var
   i:Integer;
@@ -73,11 +67,10 @@ while True do begin
   //glBegin(GL_POINTS);
   //glColor4f; glVertex3f
   //glEnd;
-  
   TParallel.&For(0,100000,procedure(i:integer)
   begin
-    particles[i].x:=particles[i].x+particles[i].dx/10;
-    particles[i].y:=particles[i].y+(particles[i].dy-(1-particles[i].bright)/100)/10;
+    particles[i].x:=particles[i].x+particles[i].dx/5;
+    particles[i].y:=particles[i].y+(particles[i].dy-(1-particles[i].bright)/100)/5;
     particles[i].bright:=particles[i].bright-0.0003;
     particles[i].a:=Round(particles[i].bright*255);
     if (abs(particles[i].x)>1)or(abs(particles[i].y)>1)or(particles[i].bright<0) then begin
@@ -107,7 +100,7 @@ while True do begin
     glEnableClientState( GL_COLOR_ARRAY );
     glVertexPointer( 2, GL_FLOAT, sizeof(TParticle), @particles[0].x );
     glColorPointer( 4, GL_UNSIGNED_BYTE, sizeof(TParticle), @particles[0].r );
-    glPointSize(2);
+    glPointSize(1);
     glDrawArrays( GL_POINTS, 0, 100000 );
     glDisableClientState( GL_VERTEX_ARRAY );
     glDisableClientState( GL_COLOR_ARRAY );
